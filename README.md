@@ -8,7 +8,6 @@ This pipeline provides a comprehensive framework for comparing different methods
 
 - MultiMIL
 - Random Forest (RF)
-- Neural Networks (NN)
 - Multiclass Regression (MR)
 
 The pipeline supports both classification and regression tasks on single-cell data, and compares the performance on:
@@ -20,11 +19,10 @@ sample representations.
 
 ## Features
 
-- **Modular Design**: Easy to add new methods and datasets
-- **Reproducible**: Snakemake ensures reproducible workflows
-- **Flexible**: Supports various data formats and analysis tasks
-- **Comprehensive Evaluation**: Multiple metrics and visualization options
-- **Conda Environment**: Isolated environment management
+- Modular Design: Easy to add new methods and datasets
+- Reproducible: Snakemake ensures reproducible workflows
+- Comprehensive Evaluation: Multiple metrics and visualization options
+- Conda Environment: Isolated environment management
 
 ## Quick Start
 
@@ -40,7 +38,6 @@ mamba activate sample_prediction_pipeline
 
 2. **Run the example:**
 ```bash
-cp config_example.yaml config.yaml
 snakemake --cores 1
 ```
 
@@ -58,18 +55,18 @@ For detailed installation instructions, configuration options, and advanced usag
 
 ### Traditional Methods
 - **pb_rf**: Random Forest on pseudobulk data
-- **pb_nn**: Neural Network on pseudobulk data
+<!-- - **pb_nn**: Neural Network on pseudobulk data -->
 - **gex_rf**: Random Forest on gene expression
-- **gex_nn**: Neural Network on gene expression
+<!-- - **gex_nn**: Neural Network on gene expression -->
 
 ### Frequency-based Methods
 - **freq_rf**: Random Forest on frequency data
-- **freq_nn**: Neural Network on frequency data
+<!-- - **freq_nn**: Neural Network on frequency data -->
 - **freq_mr**: Multiple Regression on frequency data
 
 ### Cell Type Methods
 - **ct_pb_rf**: Cell type-aware Random Forest
-- **ct_pb_nn**: Cell type-aware Neural Network
+<!-- - **ct_pb_nn**: Cell type-aware Neural Network -->
 - **ct_pb_mr**: Cell type-aware Multiple Regression
 
 ## Output Structure
@@ -96,7 +93,7 @@ data/
 4. Add tests if applicable
 5. Submit a pull request
 
-## Citation
+<!-- ## Citation
 
 If you use this pipeline in your research, please cite:
 
@@ -107,7 +104,7 @@ If you use this pipeline in your research, please cite:
   year={2025},
   url={https://github.com/theislab/sample-prediction-pipeline}
 }
-```
+``` -->
 
 ## License
 
