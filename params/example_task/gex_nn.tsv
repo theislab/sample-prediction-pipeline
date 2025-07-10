@@ -1,0 +1,2 @@
+norm	batch_size	lr	epochs
+True	16	0.01	20

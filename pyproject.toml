@@ -1,0 +1,146 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sample-prediction-pipeline"
+dynamic = ["version"]
+description = "A Snakemake-based pipeline for benchmarking sample-level prediction methods from single-cell data"
+readme = "README.md"
+license = {text = "BSD-3-Clause"}
+authors = [
+    {name = "Anastasia Litinetskaya"}
+]
+maintainers = [
+    {name = "Anastasia Litinetskaya"}
+]
+keywords = ["bioinformatics", "single-cell", "machine-learning", "snakemake", "multiple-instance-learning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "scanpy",
+    "matplotlib",
+    "pandas!=2.1.2",
+    "decoupler",
+    "ipywidgets",
+    "snakemake",
+    "anndata",
+    "numpy",
+    "scikit-learn",
+    "torch",
+    "yaml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.800",
+    "pre-commit",
+]
+
+[project.urls]
+Homepage = "https://github.com/theislab/sample-prediction-pipeline"
+Documentation = "https://github.com/theislab/sample-prediction-pipeline#readme"
+Repository = "https://github.com/theislab/sample-prediction-pipeline"
+"Bug Tracker" = "https://github.com/theislab/sample-prediction-pipeline/issues"
+
+[project.scripts]
+sample-prediction-pipeline = "scripts.run_method:main"
+
+[tool.setuptools]
+packages = ["scripts"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.yml", "*.tsv", "*.txt"]
+
+[tool.setuptools_scm]
+write_to = "scripts/_version.py"
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg",
+    ".venv",
+    ".mypy_cache",
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["scripts"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+] 

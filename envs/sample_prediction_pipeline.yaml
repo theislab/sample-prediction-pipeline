@@ -1,0 +1,25 @@
+name: sample_prediction_pipeline
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - scanpy
+  - anndata
+  - decoupler
+  - pyyaml
+  - snakemake
+  - pulp=2.7.0
+  - pip
+  - pip:
+    - torch
+    - scvi-tools
+    - -e /Users/anastasia.litinetskaya/Documents/code/multimil
+    - numba==0.58.1

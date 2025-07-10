@@ -1,0 +1,26 @@
+# Configuration for the Sample Prediction Pipeline
+# Example dataset: Predicting cell type distributions from clinical severity
+
+TASKS:
+
+  example_task:
+    input: data/example/example_data.h5ad
+    label_key: cell_type  # Cell type labels
+    condition_key: condition  # Clinical severity (Healthy vs Severe)
+    sample_key: sample_id  # Using sample_id as sample identifier
+    n_splits: 3  # Number of cross-validation splits
+    methods:
+      multimil: params/example_task/multimil.tsv
+      multimil_reg: params/example_task/multimil_reg.tsv
+      pb_rf: params/example_task/pb_rf.tsv
+      gex_rf: params/example_task/gex_rf.tsv
+      # pb_nn: params/example_task/pb_nn.tsv
+      # gex_nn: params/example_task/gex_nn.tsv
+      pb_mr: params/example_task/pb_mr.tsv
+      gex_mr: params/example_task/gex_mr.tsv
+      freq_mr: params/example_task/freq_mr.tsv
+      freq_rf: params/example_task/freq_rf.tsv
+      # freq_nn: params/example_task/freq_nn.tsv
+      # ct_pb_nn: params/example_task/ct_pb_nn.tsv
+      ct_pb_rf: params/example_task/ct_pb_rf.tsv
+      ct_pb_mr: params/example_task/ct_pb_mr.tsv 

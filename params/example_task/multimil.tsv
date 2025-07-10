@@ -1,0 +1,2 @@
+categorical_covariate_keys	class_loss_coef	train_max_epochs	train_save_checkpoint_every_n_epochs	lr	batch_size	seed	subset_umap	umap_colors
+[]	1.0	4	2	0.001	16	42	1000	['cell_type']
