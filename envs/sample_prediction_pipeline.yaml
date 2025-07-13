@@ -19,7 +19,5 @@ dependencies:
   - pulp=2.7.0
   - pip
   - pip:
-    - torch
-    - scvi-tools
-    - -e /Users/anastasia.litinetskaya/Documents/code/multimil
+    - multimil
     - numba==0.58.1

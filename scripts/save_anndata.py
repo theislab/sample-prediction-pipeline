@@ -79,9 +79,7 @@ if 'multimil' in method:
         if condition_key not in setup_params["categorical_covariate_keys"]:
             setup_params["categorical_covariate_keys"].append(condition_key)
 
-    model_params = {
-        "z_dim": original_adata.X.shape[1],
-    }
+    model_params = {}
     if regression is True:
         model_params["regression_loss_coef"] = params['regression_loss_coef']
     else:
@@ -96,9 +94,6 @@ if 'multimil' in method:
     for i in range(n_splits):
         # Start from a fresh copy of the original AnnData for each split
         adata = original_adata.copy()
-        adata = mtm.data.organize_multimodal_anndatas(
-            adatas = [[adata]],
-        )
             
         query = adata[adata.obs[f"split{i}"] == "val"].copy()
         adata = adata[adata.obs[f"split{i}"] == "train"].copy()
@@ -191,55 +186,37 @@ if 'multimil' in method:
         for key in list(train_state_dict.keys()):
             train_state_dict[key.replace('module.', '')] = train_state_dict.pop(key)
 
-        # Filter out classifier keys that don't exist in current model
-        current_keys = set(mil.module.state_dict().keys())
-        filtered_state_dict = {k: v for k, v in train_state_dict.items() if k in current_keys}
-        
         # Load the compatible parts of the state dict
-        mil.module.load_state_dict(filtered_state_dict, strict=False)
+        mil.module.load_state_dict(train_state_dict, strict=False)
         
         # Reinitialize the model to ensure all components are properly set up
         mil.is_trained_ = True
         
-        # Force model to create all components by running a forward pass
-        try:
-            mil.get_model_output(adata, batch_size=batch_size)
-        except Exception as e:
-            import traceback
-            traceback.print_exc()
-            # Continue anyway to see what happens
-
+        # mil.get_model_output(adata, batch_size=batch_size)
+        
         idx = query.obs[donor].sort_values().index
         query = query[idx].copy()
 
         new_model = mtm.model.MILClassifier.load_query_data(query, reference_model=mil)
 
         new_model.is_trained_ = True
-        try:
-            new_model.get_model_output(query, batch_size=batch_size)
-        except Exception as e:
-            import traceback
-            traceback.print_exc()
-
+        new_model.get_model_output(query, batch_size=batch_size)
+        
         adata_both = ad.concat([adata, query])
         
         # Only save cell attention if it exists
         if 'cell_attn' in adata_both.obs.columns:
-            adata.obs[f'cell_attn_{i}'] = adata_both.obs['cell_attn']
+            original_adata.obs[f'cell_attn_{i}'] = adata_both.obs['cell_attn']
         else:
             print(f"No cell_attn found in adata_both for split {i}")
         
         print(f"Completed split {i}")
     
-    # Only calculate mean for splits that were actually processed
-    cell_attn_cols = [f'cell_attn_{i}' for i in range(n_splits)]
-    existing_cols = [col for col in cell_attn_cols if col in adata.obs.columns]
-    if len(existing_cols) > 0:
-        adata.obs['cell_attn'] = np.mean([adata.obs[col] for col in existing_cols], axis=0)
-    else:
-        print("No cell_attn columns found, skipping mean calculation")
+    if 'cell_attn' in adata_both.obs.columns:
+        cell_attn_cols = [f'cell_attn_{i}' for i in range(n_splits)]
+        original_adata.obs['cell_attn'] = np.mean([original_adata.obs[col] for col in cell_attn_cols], axis=0)
         
-    adata.write(f'data/{method}/{task}/{h}_adata_both.h5ad')
+    original_adata.write(f'data/{method}/{task}/{h}_adata_both.h5ad')
 else:
     raise ValueError(f'Unknown method: {method}')
 

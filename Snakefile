@@ -48,6 +48,8 @@ rule find_best_per_task:
         tsv='data/reports/best.tsv'
     params:
         config=config
+    conda:
+    	'envs/sample_prediction_pipeline.yaml'
     script:
         'scripts/find_best.py'
 
@@ -76,6 +78,5 @@ rule save_anndata:
 rule all:
     input:
         expand('data/reports/{task}_accuracy.png', task=tasks),
-        #'data/reports/best_anndata.txt'
         expand('data/reports/{task}/best_{method}.txt', zip, task=multimil_tasks_df['task'].values, method = multimil_tasks_df['method'].values)
     default_target: True

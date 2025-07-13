@@ -83,14 +83,9 @@ def run_gex_mr(adata, sample_key, condition_key, n_splits, params, method, **kwa
     dfs = []
     for i in range(n_splits):
         print(f'Processing split = {i}...')
-        print('adata = ')
-        print(adata)
         df = adata.obs[[f'split{i}', sample_key]].drop_duplicates()
-        print(df)
         train = list(df[df[f'split{i}'] == 'train'][sample_key])
         val = list(df[df[f'split{i}'] == 'val'][sample_key])
-        print('train = ', train)
-        print('val = ', val)
         # train data
         x = pd.DataFrame(adata[adata.obs[sample_key].isin(train)].X).to_numpy()
         # num_of_classes = len(adata.obs[condition_key].cat.categories)

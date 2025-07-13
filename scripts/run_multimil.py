@@ -64,12 +64,10 @@ def run_multimil(adata, sample_key, condition_key, n_splits, params, hash, task,
     if regression is True:
         model_params = {
             "regression_loss_coef": params['regression_loss_coef'],
-            "z_dim": adata.X.shape[1],
         }
     else:
         model_params = {
             "class_loss_coef": params['class_loss_coef'],
-            "z_dim": adata.X.shape[1],
         }
     
     subset_umap = params['subset_umap']
@@ -97,12 +95,9 @@ def run_multimil(adata, sample_key, condition_key, n_splits, params, hash, task,
 
         print('Organizing multimodal anndatas...')
         # Use fresh copy of original data for each split
-        adata = mtm.data.organize_multimodal_anndatas(
-            adatas = [[original_adata]],
-        )
             
-        query = adata[adata.obs[f"split{i}"] == "val"].copy()
-        adata = adata[adata.obs[f"split{i}"] == "train"].copy()
+        query = original_adata[original_adata.obs[f"split{i}"] == "val"].copy()
+        adata = original_adata[original_adata.obs[f"split{i}"] == "train"].copy()
 
         idx = adata.obs[donor].sort_values().index
         adata = adata[idx].copy()

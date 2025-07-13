@@ -74,6 +74,8 @@ dmypy.json
 # Data files
 data/reports/
 data/tasks.tsv
+data/multimil/
+data/multimil_reg/
 *.h5
 *.csv
 *.txt
@@ -109,4 +111,3 @@ outputs/
 
 # tmp
 *_nn.py
-REPOSITORY_SETUP.md
