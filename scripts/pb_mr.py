@@ -1,13 +1,13 @@
-import scanpy as sc
 import pandas as pd
-import decoupler as dc
 import numpy as np
 
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import OneHotEncoder
 from scipy.special import softmax
-onehot_encoder = OneHotEncoder(sparse_output=False)
 from scipy.special import logsumexp
+from sklearn.preprocessing import StandardScaler
+
+onehot_encoder = OneHotEncoder(sparse_output=False)
 
 
 def loss(X, Y, W):
@@ -77,8 +77,8 @@ def run_pb_mr(adata, sample_key, condition_key, n_splits, params, method, **kwar
     adata_ = custom_pseudobulk_aggregation(adata, sample_key=sample_key, groups_col=None)
 
     if params['norm'] is True:
-        sc.pp.normalize_total(adata_, target_sum=1e4)
-        sc.pp.log1p(adata_)
+        scaler = StandardScaler()
+        adata_.X = scaler.fit_transform(adata_.X)
     adata_.obs[condition_key] = adata_.obs[condition_key].astype('category')
 
     val_accuracies = []

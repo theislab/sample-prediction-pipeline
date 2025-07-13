@@ -1,10 +1,10 @@
-import scanpy as sc
 import pandas as pd
 import numpy as np
 import scipy
 
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
 
 
 def run_gex_rf(adata, condition_key, n_splits, params, **kwargs):
@@ -13,8 +13,8 @@ def run_gex_rf(adata, condition_key, n_splits, params, **kwargs):
     rename_dict = {name: number for number, name in enumerate(np.unique(adata.obs[condition_key]))}
     
     if params['norm'] is True:
-        sc.pp.normalize_total(adata, target_sum=1e4)
-        sc.pp.log1p(adata)
+        scaler = StandardScaler()
+        adata.X = scaler.fit_transform(adata.X)
 
     val_accuracies = []
     val_avg = []

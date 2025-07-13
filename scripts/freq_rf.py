@@ -1,10 +1,9 @@
-import scanpy as sc
 import pandas as pd
-import decoupler as dc
 import numpy as np
 
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
 
 
 def create_frequency_dataset(adata, celltype, donor, condition, standartize, rename_dict, ct_to_keep):
@@ -42,7 +41,8 @@ def create_frequency_dataset(adata, celltype, donor, condition, standartize, ren
     y = np.delete(y, idx)
     
     if standartize is True:
-        X = (X - np.mean(X, axis=0)) / np.std(X, axis=0)
+        scaler = StandardScaler()
+        X = scaler.fit_transform(X)
     
     return X, y
 

@@ -9,6 +9,7 @@ This pipeline provides a comprehensive framework for comparing different methods
 - MultiMIL
 - Random Forest (RF)
 - Multiclass Regression (MR)
+- Feed-forward Neural Network (NN)
 
 The pipeline supports both classification and regression tasks on single-cell data, and compares the performance on:
 - bulk
@@ -41,7 +42,7 @@ mamba activate sample_prediction_pipeline
 snakemake --cores 1
 ```
 
-This will run all methods on the example dataset and produce results in `data/reports/`.
+This will run all methods on the example dataset with minimal test parameters and produce results in `data/reports/`.
 
 ## Documentation
 
@@ -55,18 +56,18 @@ For detailed installation instructions, configuration options, and advanced usag
 
 ### Traditional Methods
 - **pb_rf**: Random Forest on pseudobulk data
-<!-- - **pb_nn**: Neural Network on pseudobulk data -->
+- **pb_nn**: Neural Network on pseudobulk data
 - **gex_rf**: Random Forest on gene expression
-<!-- - **gex_nn**: Neural Network on gene expression -->
+- **gex_nn**: Neural Network on gene expression
 
 ### Frequency-based Methods
 - **freq_rf**: Random Forest on frequency data
-<!-- - **freq_nn**: Neural Network on frequency data -->
+- **freq_nn**: Neural Network on frequency data
 - **freq_mr**: Multiple Regression on frequency data
 
 ### Cell Type Methods
 - **ct_pb_rf**: Cell type-aware Random Forest
-<!-- - **ct_pb_nn**: Cell type-aware Neural Network -->
+- **ct_pb_nn**: Cell type-aware Neural Network
 - **ct_pb_mr**: Cell type-aware Multiple Regression
 
 ## Output Structure
@@ -112,4 +113,4 @@ This project is licensed under the BSD-3-Clause License - see the [LICENSE](LICE
 
 ## Support
 
-For questions and support, please open an issue on GitHub or contact the maintainers. 
+For questions and support, please open an issue on GitHub. 

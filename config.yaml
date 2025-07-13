@@ -14,13 +14,13 @@ TASKS:
       multimil_reg: params/example_task/multimil_reg.tsv
       pb_rf: params/example_task/pb_rf.tsv
       gex_rf: params/example_task/gex_rf.tsv
-      # pb_nn: params/example_task/pb_nn.tsv
-      # gex_nn: params/example_task/gex_nn.tsv
+      pb_nn: params/example_task/pb_nn.tsv
+      gex_nn: params/example_task/gex_nn.tsv
       pb_mr: params/example_task/pb_mr.tsv
       gex_mr: params/example_task/gex_mr.tsv
       freq_mr: params/example_task/freq_mr.tsv
       freq_rf: params/example_task/freq_rf.tsv
-      # freq_nn: params/example_task/freq_nn.tsv
-      # ct_pb_nn: params/example_task/ct_pb_nn.tsv
+      freq_nn: params/example_task/freq_nn.tsv
+      ct_pb_nn: params/example_task/ct_pb_nn.tsv
       ct_pb_rf: params/example_task/ct_pb_rf.tsv
       ct_pb_mr: params/example_task/ct_pb_mr.tsv 

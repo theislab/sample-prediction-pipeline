@@ -122,34 +122,45 @@ if 'multimil' in method:
         checkpoint = torch.load(path_to_train_checkpoints + f'{best_ckpt}.ckpt')
         state_dict = checkpoint['state_dict']
         
-        # Check if it's a classification or regression model based on state dict keys
-        has_classifiers = any('classifiers' in key for key in state_dict.keys())
-        has_regressors = any('regressors' in key for key in state_dict.keys())
+        # # Check if it's a classification or regression model based on state dict keys
+        # has_classifiers = any('classifiers' in key for key in state_dict.keys())
+        # has_regressors = any('regressors' in key for key in state_dict.keys())
         
-        if has_classifiers:
-            # Check if the number of classes matches between saved model and current data
-            saved_num_classes = None
-            for key in state_dict.keys():
-                if 'classifiers.0.1.weight' in key:
-                    saved_num_classes = state_dict[key].shape[0]
-                    break
+        # if has_classifiers:
+        #     # Check if the number of classes matches between saved model and current data
+        #     saved_num_classes = None
+        #     for key in state_dict.keys():
+        #         if 'classifiers.0.1.weight' in key:
+        #             saved_num_classes = state_dict[key].shape[0]
+        #             break
             
-            current_num_classes = len(adata.obs[condition].cat.categories)
+        #     current_num_classes = len(adata.obs[condition].cat.categories)
             
-            if saved_num_classes != current_num_classes:
-                continue
+        #     if saved_num_classes != current_num_classes:
+        #         continue
             
-            # It's a classification model
-            mil = mtm.model.MILClassifier(
-                adata, 
-                classification=[
-                    condition
-                ],
-                sample_key=donor,
-                **model_params,
-            )
-        elif has_regressors:
-            # It's a regression model
+        #     # It's a classification model
+        #     mil = mtm.model.MILClassifier(
+        #         adata, 
+        #         classification=[
+        #             condition
+        #         ],
+        #         sample_key=donor,
+        #         **model_params,
+        #     )
+        # elif has_regressors:
+        #     # It's a regression model
+        #     mil = mtm.model.MILClassifier(
+        #         adata, 
+        #         ordinal_regression=[
+        #             condition
+        #         ],
+        #         sample_key=donor,
+        #         **model_params,
+        #     )
+        # else:
+        #     # Fallback to the original logic
+        if regression is True:
             mil = mtm.model.MILClassifier(
                 adata, 
                 ordinal_regression=[
@@ -159,25 +170,14 @@ if 'multimil' in method:
                 **model_params,
             )
         else:
-            # Fallback to the original logic
-            if regression is True:
-                mil = mtm.model.MILClassifier(
-                    adata, 
-                    ordinal_regression=[
-                        condition
-                    ],
-                    sample_key=donor,
-                    **model_params,
-                )
-            else:
-                mil = mtm.model.MILClassifier(
-                    adata, 
-                    classification=[
-                        condition
-                    ],
-                    sample_key=donor,
-                    **model_params,
-                )
+            mil = mtm.model.MILClassifier(
+                adata, 
+                classification=[
+                    condition
+                ],
+                sample_key=donor,
+                **model_params,
+            )
 
         path_to_train_checkpoints = f'data/{method}/{task}/{h}/{i}/checkpoints/'
         

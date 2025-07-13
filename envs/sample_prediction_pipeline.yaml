@@ -13,7 +13,6 @@ dependencies:
   - seaborn
   - scanpy
   - anndata
-  - decoupler
   - pyyaml
   - snakemake
   - pulp=2.7.0

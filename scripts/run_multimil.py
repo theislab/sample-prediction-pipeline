@@ -92,10 +92,7 @@ def run_multimil(adata, sample_key, condition_key, n_splits, params, hash, task,
         ########################
         ######## TRAIN #########
         ########################
-
-        print('Organizing multimodal anndatas...')
-        # Use fresh copy of original data for each split
-            
+ 
         query = original_adata[original_adata.obs[f"split{i}"] == "val"].copy()
         adata = original_adata[original_adata.obs[f"split{i}"] == "train"].copy()
 

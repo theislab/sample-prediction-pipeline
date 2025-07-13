@@ -4,8 +4,10 @@ import numpy as np
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import OneHotEncoder
 from scipy.special import softmax
-onehot_encoder = OneHotEncoder(sparse_output=False)
 from scipy.special import logsumexp
+from sklearn.preprocessing import StandardScaler
+
+onehot_encoder = OneHotEncoder(sparse_output=False)
 
 
 def loss(X, Y, W):
@@ -103,7 +105,8 @@ def create_frequency_dataset(adata, celltype, donor, condition, standartize, ren
     y = np.delete(y, idx)
     
     if standartize is True:
-        X = (X - np.mean(X, axis=0)) / np.std(X, axis=0)
+        scaler = StandardScaler()
+        X = scaler.fit_transform(X)
     
     return X, y
 

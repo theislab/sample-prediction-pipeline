@@ -1,12 +1,13 @@
-import scanpy as sc
 import pandas as pd
 import numpy as np
 
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import OneHotEncoder
 from scipy.special import softmax
-onehot_encoder = OneHotEncoder(sparse_output=False)
 from scipy.special import logsumexp
+from sklearn.preprocessing import StandardScaler
+
+onehot_encoder = OneHotEncoder(sparse_output=False)
 
 
 def loss(X, Y, W):
@@ -75,8 +76,8 @@ def run_gex_mr(adata, sample_key, condition_key, n_splits, params, method, **kwa
     rename_dict = {name: number for number, name in enumerate(np.unique(adata.obs[condition_key]))}
     
     if params['norm'] is True:
-        sc.pp.normalize_total(adata, target_sum=1e4)
-        sc.pp.log1p(adata)
+        scaler = StandardScaler()
+        adata.X = scaler.fit_transform(adata.X)
 
     val_accuracies = []
     val_avg = []

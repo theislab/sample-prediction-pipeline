@@ -108,6 +108,3 @@ snakemake.log
 # Results and outputs
 results/
 outputs/ 
-
-# tmp
-*_nn.py

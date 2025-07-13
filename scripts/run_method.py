@@ -1,24 +1,20 @@
 import time 
 start_time = time.time()
-import argparse
-from pprint import pprint
-import numpy as np
-import pandas as pd
 import scanpy as sc
 import ast
 
 from pb_rf import run_pb_rf
 from gex_rf import run_gex_rf
-#from pb_nn import run_pb_nn
-#from gex_nn import run_gex_nn
+from pb_nn import run_pb_nn
+from gex_nn import run_gex_nn
 from pb_mr import run_pb_mr
 from gex_mr import run_gex_mr
-#from ct_pb_nn import run_ct_pb_nn
+from ct_pb_nn import run_ct_pb_nn
 from ct_pb_rf import run_ct_pb_rf
 from ct_pb_mr import run_ct_pb_mr
 from freq_mr import run_freq_mr
 from freq_rf import run_freq_rf
-# from freq_nn import run_freq_nn
+from freq_nn import run_freq_nn
 from run_multimil import run_multimil
 
 print('--- %s seconds ---' % (time.time() - start_time))
@@ -26,16 +22,16 @@ print('--- %s seconds ---' % (time.time() - start_time))
 METHOD_MAP = dict(
     pb_rf=dict(function=run_pb_rf),
     gex_rf=dict(function=run_gex_rf),
-    #pb_nn=dict(function=run_pb_nn),
-    #gex_nn=dict(function=run_gex_nn),
+    pb_nn=dict(function=run_pb_nn),
+    gex_nn=dict(function=run_gex_nn),
     pb_mr=dict(function=run_pb_mr),
     gex_mr=dict(function=run_gex_mr),
-    #ct_pb_nn=dict(function=run_ct_pb_nn),
+    ct_pb_nn=dict(function=run_ct_pb_nn),
     ct_pb_rf=dict(function=run_ct_pb_rf),
     ct_pb_mr=dict(function=run_ct_pb_mr),
     freq_mr=dict(function=run_freq_mr),
     freq_rf=dict(function=run_freq_rf),
-    #freq_nn=dict(function=run_freq_nn),
+    freq_nn=dict(function=run_freq_nn),
     multimil=dict(function=run_multimil),
     multimil_reg=dict(function=run_multimil),
 )
@@ -122,29 +118,29 @@ elif method in ['pb_mr', 'gex_mr']:
         params=method_params,
         method=method,
     )
-# elif method in ['pb_nn', 'gex_nn']:
-#     df = method_function(
-#         adata=adata, 
-#         sample_key=sample_key, 
-#         condition_key=condition_key, 
-#         n_splits=n_splits, 
-#         params=method_params,
-#         hash=h,
-#         method=method,
-#         task=task,
-#     )
-# elif method in ['ct_pb_nn']:
-#     df = method_function(
-#         adata=adata, 
-#         sample_key=sample_key, 
-#         condition_key=condition_key, 
-#         n_splits=n_splits, 
-#         params=method_params,
-#         hash=h,
-#         method=method,
-#         task=task,
-#         label_key=label_key,
-#     )
+elif method in ['pb_nn', 'gex_nn']:
+    df = method_function(
+        adata=adata, 
+        sample_key=sample_key, 
+        condition_key=condition_key, 
+        n_splits=n_splits, 
+        params=method_params,
+        hash=h,
+        method=method,
+        task=task,
+    )
+elif method in ['ct_pb_nn']:
+    df = method_function(
+        adata=adata, 
+        sample_key=sample_key, 
+        condition_key=condition_key, 
+        n_splits=n_splits, 
+        params=method_params,
+        hash=h,
+        method=method,
+        task=task,
+        label_key=label_key,
+    )
 else:
     # Default case for pb_rf and other simple methods
     df = method_function(

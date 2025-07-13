@@ -1,13 +1,14 @@
 import scanpy as sc
 import pandas as pd
-import decoupler as dc
 import numpy as np
 
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import OneHotEncoder
 from scipy.special import softmax
-onehot_encoder = OneHotEncoder(sparse_output=False)
+from sklearn.preprocessing import StandardScaler
 from scipy.special import logsumexp
+
+onehot_encoder = OneHotEncoder(sparse_output=False)
 
 
 def loss(X, Y, W):
@@ -83,8 +84,8 @@ def run_ct_pb_mr(adata, sample_key, condition_key, n_splits, params, label_key, 
     rename_dict = {name: number for number, name in enumerate(np.unique(adata_.obs[condition_key]))}
 
     if params['norm'] is True:
-        sc.pp.normalize_total(adata_, target_sum=1e4)
-        sc.pp.log1p(adata_)
+        scaler = StandardScaler()
+        adata_.X = scaler.fit_transform(adata_.X)
     adata_.obs[condition_key] = adata_.obs[condition_key].astype('category')
     adata_.obs[sample_key] = adata_.obs[sample_key].astype('category')
     adata_.obs[label_key] = adata_.obs[label_key].astype('category')
