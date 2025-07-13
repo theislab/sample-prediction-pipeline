@@ -77,13 +77,7 @@ TASKS:
 
 ### Parameter Files
 
-For each method, create a TSV file with parameter combinations (see `params/example_task/` for examples):
-
-```tsv
-learning_rate	epochs
-0.01	10
-0.001	20
-```
+For each method, create a TSV file with parameter combinations (see `params/example_task/` for examples).
 
 ## Data Requirements
 
@@ -125,7 +119,58 @@ Your input AnnData (.h5ad) file **must** contain:
 - **ct_pb_nn**: Cell type-aware Neural Network
 - **ct_pb_mr**: Cell type-aware Multiple Regression
 
+## Parameter Documentation
+
+The following sections describe the parameters available for each method type. Each parameter file should contain a header row with parameter names and subsequent rows with parameter values.
+
+### MultiMIL Methods
+
+#### multimil.tsv / multimil_reg.tsv
+Parameters for MultiMIL classification and regression:
+
+- **categorical_covariate_keys**: List of categorical covariates to include in the model (should include the prediction covariate)
+- **class_loss_coef** (multimil.tsv) / **regression_loss_coef** (multimil_reg.tsv): Coefficient for loss function
+- **train_max_epochs**: Maximum number of training epochs
+- **train_save_checkpoint_every_n_epochs**: Frequency of checkpoint saving during training
+- **lr**: Learning rate for model training
+- **batch_size**: Batch size for training
+- **seed**: Random seed for reproducibility
+- **subset_umap**: Number of cells to subset for UMAP visualization
+- **umap_colors**: List of variables to color UMAP plots by
+
+### Random Forest and Multiple Regression Methods
+
+#### pb_rf.tsv / pb_mr.tsv / gex_rf.tsv / gex_mr.tsv / freq_rf.tsv / freq_mr.tsv / ct_pb_rf.tsv / ct_pb_mr.tsv
+Parameters for all Random Forest and Multiple Regression methods:
+
+- **norm**: Whether to normalize the data using StandardScaler
+
+### Neural Network Methods
+
+#### pb_nn.tsv / gex_nn.tsv / freq_nn.tsv / ct_pb_nn.tsv
+Parameters for all Neural Network methods:
+
+- **norm**: Whether to normalize the data using StandardScaler
+- **batch_size**: Batch size for training
+- **lr**: Learning rate for model training
+- **epochs**: Number of training epochs
+
+### Parameter Optimization
+
+To optimize model performance, you can create multiple parameter combinations in your TSV files. The pipeline will run each combination and report the best performing parameters. For example:
+
+```tsv
+norm	batch_size	lr	epochs
+True	16	0.01	20
+True	32	0.001	20
+False	16	0.01	20
+```
+
+This will test 3 different parameter combinations for methods that support these parameters.
+
 ## Running the Pipeline
+
+The pipeline uses Snakemake for workflow management. If you're new to Snakemake, check out the [Snakemake tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html) for detailed guidance.
 
 ### Basic Usage
 
