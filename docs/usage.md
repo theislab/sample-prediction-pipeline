@@ -29,9 +29,11 @@ mamba env create -f envs/sample_prediction_pipeline.yaml
 
 This installs all required packages including:
 - Python 3.10
-- Scanpy for single-cell analysis
-- Pandas for data manipulation
-- Matplotlib for plotting
+- Scanpy
+- Pandas
+- Matplotlib
+- Snakemake
+- MultiMIL
 - Other dependencies
 
 ### 3. Activate the Environment
@@ -40,27 +42,13 @@ This installs all required packages including:
 mamba activate sample_prediction_pipeline
 ```
 
-### 4. Verify Installation
-
-```bash
-# Test imports
-python -c "import scanpy as sc; import pandas as pd; import matplotlib.pyplot as plt; print('All packages imported successfully!')"
-
-# Test Snakemake
-snakemake --version
-```
-
 ## Quick Start
 
 The repository includes ready-to-use example data and configuration files.
 
 ### 1. Use the Provided Example Data
 
-1. **Copy the example config:**
-   ```bash
-   cp config_example.yaml config.yaml
-   ```
-2. **Run the pipeline:**
+1. **Run the pipeline:**
    ```bash
    snakemake --cores 1
    ```
@@ -152,42 +140,6 @@ snakemake --cores 4
 snakemake data/reports/your_task_accuracy.png --cores 4
 ```
 
-### Example Analyses
-
-#### Classification Task
-
-For cell type classification:
-
-```yaml
-TASKS:
-  cell_type_classification:
-    input: data/cell_types.h5ad
-    label_key: cell_type
-    condition_key: condition
-    sample_key: sample_id
-    n_splits: 5
-    methods:
-      multimil: params/cell_types/multimil.tsv
-      pb_rf: params/cell_types/pb_rf.tsv
-```
-
-#### Regression Task
-
-For continuous outcome prediction:
-
-```yaml
-TASKS:
-  regression_analysis:
-    input: data/regression_data.h5ad
-    label_key: continuous_outcome
-    condition_key: condition
-    sample_key: sample_id
-    n_splits: 5
-    methods:
-      multimil_reg: params/regression/multimil_reg.tsv
-      pb_rf: params/regression/pb_rf.tsv
-```
-
 ## Output Interpretation
 
 ### Results Files
@@ -203,32 +155,6 @@ The pipeline generates several output files:
 
 3. **Visualization** (`data/reports/{task}_accuracy.png`):
    - Performance comparison plots
-
-## Advanced Usage
-
-### Regenerating Example Data
-
-If you want to regenerate the example data (e.g., with different parameters), run:
-```bash
-python scripts/create_example_data.py
-```
-This will overwrite the files in `data/example/` and `params/example_task/`.
-
-### Using Your Own Data
-
-If you want to use your own data, ensure it is in H5AD format (AnnData object) with the following structure:
-
-```python
-import scanpy as sc
-import pandas as pd
-
-# Your data should have:
-# - X: expression matrix (cells x genes)
-# - obs: cell metadata (sample_id, condition, cell_type, etc.)
-# - var: gene metadata (optional)
-
-adata = sc.read_h5ad("your_data.h5ad")
-```
 
 ## Getting Help
 
