@@ -121,7 +121,7 @@ Your input AnnData (.h5ad) file **must** contain:
 
 ## Parameter Documentation
 
-The following sections describe the parameters available for each method type. Each parameter file should contain a header row with parameter names and subsequent rows with parameter values.
+Parameter files (TSV format) in `params/recommended_params/` specify the recommended hyperparameter search space for each method. Each file contains a header row and one or more rows of parameter values. The pipeline will run all parameter combinations listed in these files. You can edit these files to control which hyperparameters are tested for each method. For MultiMIL methods, you need to change `'your_sample_column_name', 'your_phenotype_column_name', 'your_celltype_column_name'` to the coresponding column names in your data. 
 
 ### MultiMIL Methods
 
@@ -137,6 +137,8 @@ Parameters for MultiMIL classification and regression:
 - **seed**: Random seed for reproducibility
 - **subset_umap**: Number of cells to subset for UMAP visualization
 - **umap_colors**: List of variables to color UMAP plots by
+
+We recommend to start the optimization with changing the learning rate as suggested in the `recommened_params`, and if the performance is unsatisfactory also optimize the loss coefficients.
 
 ### Random Forest and Multiple Regression Methods
 
@@ -154,19 +156,6 @@ Parameters for all Neural Network methods:
 - **batch_size**: Batch size for training
 - **lr**: Learning rate for model training
 - **epochs**: Number of training epochs
-
-### Parameter Optimization
-
-To optimize model performance, you can create multiple parameter combinations in your TSV files. The pipeline will run each combination and report the best performing parameters. For example:
-
-```tsv
-norm	batch_size	lr	epochs
-True	16	0.01	20
-True	32	0.001	20
-False	16	0.01	20
-```
-
-This will test 3 different parameter combinations for methods that support these parameters.
 
 ## Running the Pipeline
 

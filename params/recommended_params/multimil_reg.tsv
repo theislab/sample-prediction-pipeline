@@ -1,0 +1,5 @@
+	lr	categorical_covariate_keys	regression_loss_coef	scoring	seed	batch_size	train_max_epochs	train_save_checkpoint_every_n_epochs	subset_umap	umap_colors
+0	1e-2	['your_sample_column_name', 'your_phenotype_column_name']	1.0	gated_attn	0	256	200	50	20000	['your_sample_column_name', 'your_phenotype_column_name', 'your_celltype_column_name']
+0	1e-3	['your_sample_column_name', 'your_phenotype_column_name']	1.0	gated_attn	0	256	200	50	20000	['your_sample_column_name', 'your_phenotype_column_name', 'your_celltype_column_name']
+0	1e-4	['your_sample_column_name', 'your_phenotype_column_name']	1.0	gated_attn	0	256	200	50	20000	['your_sample_column_name', 'your_phenotype_column_name', 'your_celltype_column_name']
+0	1e-5	['your_sample_column_name', 'your_phenotype_column_name']	1.0	gated_attn	0	256	200	50	20000	['your_sample_column_name', 'your_phenotype_column_name', 'your_celltype_column_name']
