@@ -14,9 +14,9 @@ This pipeline provides a comprehensive framework for comparing different methods
 The pipeline supports both classification and regression tasks on single-cell data, and compares the performance on:
 - bulk
 - cell-type bulk
-- MIL pooled
-- mean pooled
-sample representations.
+- frequency vector
+- cell embedding
+representations.
 
 ## Features
 
@@ -54,21 +54,25 @@ For detailed installation instructions, configuration options, and advanced usag
 - **multimil**: MultiMIL for sample-level classification prediction
 - **multimil_reg**: MultiMIL for sample-level regression prediction
 
-### Traditional Methods
-- **pb_rf**: Random Forest on pseudobulk data
-- **pb_nn**: Neural Network on pseudobulk data
-- **gex_rf**: Random Forest on gene expression
-- **gex_nn**: Neural Network on gene expression
+### Pseudo-bulk Methods
+- **pb_rf**: Random Forest on pseudobulk
+- **pb_nn**: Neural Network on pseudobulk
+- **pb_mr**: Multi-class Regression on pseudobulk
+- 
+### Cell Type  Methods
+- **ct_pb_rf**: Random Forest on cell type-aware pseudobulk
+- **ct_pb_nn**: Neural Network on cell type-aware pseudobulk 
+- **ct_pb_mr**: Multi-class Regression on cell type-aware pseudobulk 
 
 ### Frequency-based Methods
 - **freq_rf**: Random Forest on frequency data
 - **freq_nn**: Neural Network on frequency data
-- **freq_mr**: Multiple Regression on frequency data
+- **freq_mr**: Multi-class Regression on frequency data
 
-### Cell Type Methods
-- **ct_pb_rf**: Cell type-aware Random Forest
-- **ct_pb_nn**: Cell type-aware Neural Network
-- **ct_pb_mr**: Cell type-aware Multiple Regression
+### Cell Embedding Methods
+- **gex_rf**: Random Forest on cell embeddings
+- **gex_nn**: Neural Network on cell embeddings
+- **gex_mr**: Multi-class Regression on cell embeddings
 
 ## Output Structure
 
