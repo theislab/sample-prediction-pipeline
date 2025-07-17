@@ -5,13 +5,12 @@ A Snakemake-based pipeline for benchmarking sample-level prediction methods from
 ## Overview
 
 This pipeline provides a comprehensive framework for comparing different methods for sample-level prediction from single-cell data, including:
-
-- MultiMIL
+- MultiMIL, classification and (ordinal) regression
 - Random Forest (RF)
 - Multiclass Regression (MR)
 - Feed-forward Neural Network (NN)
 
-The pipeline supports both classification and regression tasks on single-cell data, and compares the performance on:
+The pipeline compares the performance on:
 - bulk
 - cell-type bulk
 - frequency vector
